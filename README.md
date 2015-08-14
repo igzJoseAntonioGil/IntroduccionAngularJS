@@ -5,10 +5,10 @@ Es un framework javascript, pensado principalmente para realizar aplicaciones mo
 Es potente, pero no debemos pensar en que nos va a resolver la vida de cara a entregarlo a desarrolladores que no se hayan pegado de lleno con este lenguaje. Es más, si venimos de un tratamiento de javascript muy rebajado por jQuery, el manejo del DOM sin jQuery a través de AngularJS puede ser confuso.
 
 * [Módulo principal](#Módulo principal)
-* [Controladores](#Controladores)
-* [Directivas](#Directivas)
-* [Servicios](#Servicios)
-* [Router](### Router)
+* [Controladores](#controladores)
+* [Directivas](#directivas)
+* [Servicios](#servicios)
+* [Router](#router)
 
 
 ### Módulo principal
