@@ -4,33 +4,64 @@ Es un framework javascript, pensado principalmente para realizar aplicaciones mo
 
 Es potente, pero no debemos pensar en que nos va a resolver la vida de cara a entregarlo a desarrolladores que no se hayan pegado de lleno con este lenguaje. Es más, si venimos de un tratamiento de javascript muy rebajado por jQuery, el manejo del DOM sin jQuery a través de AngularJS puede ser confuso.
 
-* [Módulo principal](#módulo-principal)
-* [Controladores](#controladores)
-* [Directivas](#directivas)
-* [Servicios](#servicios)
-* [Router](#router)
+- [Módulo principal](#módulo-principal)
+- [Controladores](#controladores)
+	- [Scope](#scope)
+	- [RootScope](#rootscope)
+- [Directivas](#directivas)
+	- [Isolated Scope](#isolated-scope)
+- [Servicios](#servicios)
+	- [Servicios de AngularJS](#servicios-de-angularjs)
+- [Router](#router)
 
 
 ### Módulo principal
+El módulo principal es lo que define una aplicación de Angular, a partir de la cual se construyen todos los elementos que necesitaremos en la aplicación.
+Generalmente, para evitar conflictos, solo hay un módulo por aplicación, el cual se define de la siguiente forma:
+
+```
+var myApp = angular.module("myApp", []);
+```
+
+El primer parámetro es el nombre que le daremos a nuestra aplicación, mientras que el segundo parámetro es una lista de módulos adicionales que queremos cargar en nuestra app.
+Estos módulos suelen añadir funcionalidades concretas a la aplicación, por ejemplo:
+
+- **ngRoute**: ofrece soporte para navegar entre vistas de nuestra aplicación
+- **ngTouch**: soporte para dispositivos táctiles
+- **ngDialog**: ventanas modales (formularios, mensajes, confirm, ...)
+- **pascalprecht.translate**: soporte multiidioma
+
 ```
 // Angular application object
 var myApp = angular.module("myApp", [
 		"ngRoute",                // Routing
 		"ngTouch",                // Improves ng-click on mobile devices
 		"ngAnimate",              // Adds some animation support
-		"pascalprecht.translate", // i18n localization
-		"ngDialog"                // modal dialogs directive
+		"ngDialog",               // modal dialogs directive
+		"pascalprecht.translate"  // i18n localization
 	]);
 ```
 
-### Controladores
+Pueden ser módulos desarrollados por nosotros o por terceros.
 
+**NOTA:** *A la hora de elegir el nombre de un módulo, se recomienda usar un espacio de nombres, para evitar posibles conflictos con módulos externos*
+
+### Controladores
 ```
 myApp.controller("MainCtrl", ["$window", function($window) {
-
+	$window.alert("Hello World!!");
+}]);
+```
+#### Scope
+En el objeto $scope se almacenan todas las variables dentro del ámbito del controlador. En el HTML, todo lo que se encuentre dentro de la directiva ng-controller=”mainController es controlable desde el objeto $scope.
+```
+myApp.controller("MainCtrl", ["$scope", function($scope) {
 	// Your code here, i.e.:
 	$window.alert("Hello World!!");
 }]);
+```
+#### RootScope
+```
 ```
 
 ### Directivas
@@ -40,10 +71,6 @@ myApp.directive("productRow", ["$rootScope", function($rootScope) {
 	return {
 		"restrict": "EA",
 		"require": "^productGrid",
-		"scope": {
-			"data": "=",
-			"gridType": "@"
-		},
 		"templateUrl": "templates/products/product_grid_row.html",
 		"link": function($scope, tElement, tAttrs, ProductGridCtrl) {
 
@@ -58,43 +85,63 @@ myApp.directive("productRow", ["$rootScope", function($rootScope) {
 			_Init();
 		}
 	};
-}])
+}]);
 ```
+#### Isolated Scope
+```
+myApp.directive("productRow", ["$rootScope", function($rootScope) {
+
+	return {
+		"restrict": "EA",
+		"require": "^productGrid",
+		"scope": {
+			"data": "=",
+			"gridType": "@"
+		},
+		"templateUrl": "templates/products/product_grid_row.html",
+		"link": function($scope, tElement, tAttrs, ProductGridCtrl) {
+			...
+		}
+	};
+}]);
+```
+
 ### Servicios
 ```
 myApp.factory("ProductTypes", ["ProductTypesService", function(ProductTypesService) {
+
 	var
-		  _infoRaw
-		, _infoObj
-		, _Raw = function() {
-			return _infoRaw;
-		  }
-		, _Obj = function() {
-			return _infoObj;
-		  }
-		, _Reduce2Obj = function(obj, item) {
-			obj[item.id] = {
-				  "legend": item.legend
-				, "color": item.color
-			};
-			return obj;
-		  }
-		, _ProductTypesLoaded = function(p_data) {
-			_infoObj = p_data.reduce(_Reduce2Obj, {});
-			p_data.pop();
-			_infoRaw = p_data;
-		  }
-		, _Init = function() {
+		_data,
+		_Init = function() {
 			ProductTypesService.get(_ProductTypesLoaded);
 			_Init = angular.noop;
-		  }
-		;
+		};
+
 	_Init();
+
 	return {
-		  "Init": _Init // Does not really need to be called...
-		, "Raw": _Raw // Returns the 5 basic types in raw format.
-		, "Obj": _Obj //Returns all 5 types, plus the aggregated one, in object format.
+		"Get": function() {
+			return _data;
+		}
 	};
-}])
+}]);
 ```
+
+#### Servicios de AngularJS
+[**$http**](https://docs.angularjs.org/api/ng/service/$http)
+The $http service is a core Angular service that facilitates communication with the remote HTTP servers via the browser's XMLHttpRequest object or via JSONP.
+```
+// Cuando se cargue la página, pide del API todos los TODOs
+$http.get('/api/todos')
+    .success(function(data) {
+        $scope.todos = data;
+        console.log(data)
+    })
+    .error(function(data) {
+        console.log('Error: ' + data);
+    });
+```
+http://jsfiddle.net/JoseAntonioGil/ohbrmodL/
+http://jsfiddle.net/JoseAntonioGil/ohbrmodL/1/
+
 ### Router
