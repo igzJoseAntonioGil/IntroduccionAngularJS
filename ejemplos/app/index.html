@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head ng-app='myApp'>
+		<meta charset="utf-8">
+		<title>Ejemplo 1</title>
+
+	</head>
+	<body ng-controller='MainCtrl'>
+
+		<!-- Directiva que se utiliza para realizar la navegación con ngRoute -->
+		<div ng-view></div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js" charset="utf-8"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js" charset="utf-8"></script>
+
+		<script src="js/app.js" charset="utf-8"></script>
+
+		<!-- Controllers -->
+		<script src="js/controllers/home.js" charset="utf-8"></script>
+		<script src="js/controllers/about.js" charset="utf-8"></script>
+		<script src="js/controllers/offers.js" charset="utf-8"></script>
+
+		<!-- Directives -->
+		<!-- script src="js/directives/xxx.js" charset="utf-8"></script>
+
+	</body>
+</html>

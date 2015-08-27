@@ -14,6 +14,7 @@ Es potente, pero no debemos pensar en que nos va a resolver la vida de cara a en
 	- [Servicios de AngularJS](#servicios-de-angularjs)
 - [Router](#router)
 
+> Este curso seguirá en la medida de lo posible las reglas propuestas por la guía de estilo de [AirBnb](https://github.com/airbnb/javascript/tree/master/es5) para ES5, salvo en casos puntuales, como ejemplos copiados de internet que no hayan sido adaptados en este sentido
 
 ### Módulo principal
 El módulo principal es lo que define una aplicación de Angular, a partir de la cual se construyen todos los elementos que necesitaremos en la aplicación.
@@ -64,6 +65,9 @@ myApp.controller("MainCtrl", ["$scope", function($scope) {
 ```
 ```
 
+Ejemplos:
+- http://jsfiddle.net/JoseAntonioGil/nhwvk9wb/
+
 ### Directivas
 ```
 myApp.directive("productRow", ["$rootScope", function($rootScope) {
@@ -106,6 +110,9 @@ myApp.directive("productRow", ["$rootScope", function($rootScope) {
 }]);
 ```
 
+Ejemplos:
+- http://jsfiddle.net/JoseAntonioGil/232y12a6/
+
 ### Servicios
 ```
 myApp.factory("ProductTypes", ["ProductTypesService", function(ProductTypesService) {
@@ -141,7 +148,8 @@ $http.get('/api/todos')
         console.log('Error: ' + data);
     });
 ```
-http://jsfiddle.net/JoseAntonioGil/ohbrmodL/
-http://jsfiddle.net/JoseAntonioGil/ohbrmodL/1/
+Ejemplos:
+- http://jsfiddle.net/JoseAntonioGil/ohbrmodL/
+- http://jsfiddle.net/JoseAntonioGil/ohbrmodL/1/
 
 ### Router
