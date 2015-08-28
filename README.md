@@ -180,7 +180,7 @@ Para ello, en Angular se utiliza el módulo *ngRoute*, el cual permite configura
 
 - Curso de AngularJS en Code School: https://www.codeschool.com/courses/shaping-up-with-angular-js
 - Tutorial oficial de AngularJS: https://docs.angularjs.org/tutorial
-- API reference de AngularJS: https://docs.angularjs.org/api
 - Blog con temas de AngularJS en español: https://carlosazaustre.es/blog/tag/angularjs/
+- API reference de AngularJS: https://docs.angularjs.org/api
 
 - URL este tutorial (GitHub): https://github.com/igzJoseAntonioGil/IntroduccionAngularJS
