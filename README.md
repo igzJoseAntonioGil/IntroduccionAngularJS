@@ -4,6 +4,11 @@ Es un framework javascript, pensado principalmente para realizar aplicaciones mo
 
 Es potente, pero no debemos pensar en que nos va a resolver la vida de cara a entregarlo a desarrolladores que no se hayan pegado de lleno con este lenguaje. Es más, si venimos de un tratamiento de javascript muy rebajado por jQuery, el manejo del DOM sin jQuery a través de AngularJS puede ser confuso.
 
+Este framework está muy orientado al modelo MVC:
+- Model -> representado por los **servicios**, **factorías**, **providers**
+- View -> equivale a las **vistas** o **plantillas** HTML
+- Controller -> se corresponde con **controladores**
+
 - [Módulo principal](#módulo-principal)
 - [Controladores](#controladores)
 	- [Scope](#scope)
@@ -12,7 +17,8 @@ Es potente, pero no debemos pensar en que nos va a resolver la vida de cara a en
 	- [Isolated Scope](#isolated-scope)
 - [Servicios](#servicios)
 	- [Servicios de AngularJS](#servicios-de-angularjs)
-- [Router](#router)
+	- [Router](#router)
+- [Enlaces de utilidad](#enlaces-de-utilidad)
 
 > Este curso seguirá en la medida de lo posible las reglas propuestas por la guía de estilo de [AirBnb](https://github.com/airbnb/javascript/tree/master/es5) para ES5, salvo en casos puntuales, como ejemplos copiados de internet que no hayan sido adaptados en este sentido
 
@@ -32,6 +38,8 @@ Estos módulos suelen añadir funcionalidades concretas a la aplicación, por ej
 - **ngDialog**: ventanas modales (formularios, mensajes, confirm, ...)
 - **pascalprecht.translate**: soporte multiidioma
 
+> Es importante recordar que cada módulo lleva asociado uno o más ficheros JS, los cuales será necesario importar en la página HTML principal
+
 ```
 // Angular application object
 var myApp = angular.module("myApp", [
@@ -42,8 +50,18 @@ var myApp = angular.module("myApp", [
 		"pascalprecht.translate"  // i18n localization
 	]);
 ```
+Por ejemplo, los módulos anteriores, corresponden con los siguientes scripts:
+```
+<script src='js/vendor/angular-1.4.4-build.4121/angular-route.js'></script>
+<script src='js/vendor/angular-1.4.4-build.4121/angular-touch.js'></script>
+<script src='js/vendor/angular-1.4.4-build.4121/angular-animate.js'></script>
+<script src='js/vendor/ngDialog.js'></script>
+<script src='js/vendor/angular-translate.min.js'></script>
+<script src='js/vendor/angular-translate-loader-static-files.js'></script>
 
-Pueden ser módulos desarrollados por nosotros o por terceros.
+```
+
+Como podemos ver en los ejemplos, hay muchos módulos de terceros que ofrecen diversas funcionalidades y, por supuesto, tambien podemos desarrollar nuestros propios módulos para reutilizarlos posteriormente.
 
 **NOTA:** *A la hora de elegir el nombre de un módulo, se recomienda usar un espacio de nombres, para evitar posibles conflictos con módulos externos*
 
@@ -153,3 +171,14 @@ Ejemplos:
 - http://jsfiddle.net/JoseAntonioGil/ohbrmodL/1/
 
 ### Router
+Una de las principales ventajas de Angular es la orientación a aplicaciones SPA (single page application), las cuales consisten en la navegación dentro de la misma página, sin necesidad de recargarla, mediante la utilización de vistas/plantillas.
+Para ello, en Angular se utiliza el módulo *ngRoute*, el cual permite configurar diferentes rutas y asociarlas a otras tantas vistas.
+
+### Enlaces de utilidad
+
+- Curso de AngularJS en Code School: https://www.codeschool.com/courses/shaping-up-with-angular-js
+- Tutorial oficial de AngularJS: https://docs.angularjs.org/tutorial
+- API reference de AngularJS: https://docs.angularjs.org/api
+- Blog con temas de AngularJS en español: https://carlosazaustre.es/blog/tag/angularjs/
+
+- URL este tutorial (GitHub): https://github.com/igzJoseAntonioGil/IntroduccionAngularJS

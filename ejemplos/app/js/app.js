@@ -4,35 +4,48 @@ var myApp = angular.module("myApp", ["ngRoute"]);
 myApp
   .config(['$routeProvider', function($routeProvider) {
     // WARNING: need to append 'Provider' to 'bmwUtil' provider module
-
     $routeProvider
       .when('/', {
         templateUrl: 'views/home.html',
-        controller: 'HomeCtrl',
-        controllerAs: 'vm'
+        controller: 'HomeCtrl'
+      })
+      .when('/ofertas', {
+        templateUrl: 'views/ofertas.html',
+        controller: 'OfertaCtrl'
+      })
+      .when('/ofertas/:oferta', {
+        templateUrl: 'views/detalle_oferta.html',
+        controller: 'OfertaCtrl'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/offers', {
-        templateUrl: 'views/offers.html',
-        controller: 'OfferCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/offers/:offer', {
-        templateUrl: 'views/offers.html',
-        controller: 'OfferCtrl',
-        controllerAs: 'vm'
+        controller: 'AboutCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
   }])
 
-  .run(['$rootScope', '$window', function($rootScope, $window) {
-    //$rootScope.IMAGE_BASE_URL = '//iberica.bmw.es/precioscerrados/promociones-2015';
+  .run(['$rootScope', '$window', 'NavigationService', function($rootScope, $window, NavigationService) {
+
     $rootScope.WINDOW_WIDTH = $window.innerWidth;
     $rootScope.WINDOW_HEIGHT = $window.innerHeight;
+
+    $rootScope.menuItems = [
+      {
+        title: 'Home',
+        url: '/home'
+      },
+      {
+        title: 'Ofertas',
+        url: '/ofertas'
+      },
+      {
+        title: 'About',
+        url: '/about'
+      }
+    ];
+
+  //$rootScope.menuItems = NavigationService.get();
+
   }]);

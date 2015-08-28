@@ -1,0 +1,99 @@
+[
+  {
+    "id": "1",
+    "versions": [
+      {
+        "id": "1_5_puertas",
+        "title": "5 Puertas",
+        "editions": [
+          "base",
+          "advanced",
+          "full"
+        ],
+        "base_price": "24.290"
+      },
+      {
+        "id": "1_3_puertas",
+        "title": "3 Puertas",
+        "editions": [
+          "base",
+          "advanced",
+          "sport"
+        ],
+        "base_price": "23.240"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "versions": [
+      {
+        "id": "2_gti",
+        "title": "GTI",
+        "editions": [
+          "base",
+          "advanced",
+          "sport",
+          "full"
+        ],
+        "base_price": "37.340"
+      },
+      {
+        "id": "2_gtd",
+        "title": "GTD",
+        "editions": [
+          "base",
+          "advanced",
+          "sport",
+          "full"
+        ],
+        "base_price": "35.340"
+      },
+      {
+        "id": "2_spider",
+        "title": "Spider",
+        "editions": [
+          "base",
+          "advanced",
+          "sport",
+          "full"
+        ],
+        "base_price": "36.150"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "versions": [
+      {
+        "id": "3_berlina",
+        "title": "Berlina",
+        "editions": [
+          "advanced",
+          "sport",
+          "full"
+        ],
+        "base_price": "30.785"
+      },
+      {
+        "id": "3_sport",
+        "title": "Sport",
+        "editions": [
+          "advanced",
+          "sport",
+          "full"
+        ],
+        "base_price": "38.085"
+      },
+      {
+        "id": "3_station_wagon",
+        "title": "Station Wagon",
+        "editions": [
+          "advanced",
+          "full"
+        ],
+        "base_price": "33.990"
+      }
+    ]
+  }
+]

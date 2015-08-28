@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html>
-	<head ng-app='myApp'>
+<html ng-app="myApp">
+	<head>
 		<meta charset="utf-8">
-		<title>Ejemplo 1</title>
+		<title>Introducción a AngujarJS</title>
+
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 
 	</head>
-	<body ng-controller='MainCtrl'>
+	<body ng-controller="MainCtrl">
+
+		<nav class="pure-menu pure-menu-horizontal">
+			<ul class="pure-menu-list">
+				<li class="pure-menu-item" ng-repeat="item in menuItems">
+					<a href="#{{item.url}}" class="pure-menu-link" ng-bind="item.title"></a>
+				</li>
+			</ul>
+		</nav>
 
 		<!-- Directiva que se utiliza para realizar la navegación con ngRoute -->
 		<div ng-view></div>
@@ -15,10 +25,14 @@
 
 		<script src="js/app.js" charset="utf-8"></script>
 
+		<!-- Services -->
+		<script src="js/services/navigation.js" charset="utf-8"></script>
+
 		<!-- Controllers -->
+		<script src="js/controllers/main.js" charset="utf-8"></script>
 		<script src="js/controllers/home.js" charset="utf-8"></script>
 		<script src="js/controllers/about.js" charset="utf-8"></script>
-		<script src="js/controllers/offers.js" charset="utf-8"></script>
+		<script src="js/controllers/ofertas.js" charset="utf-8"></script>
 
 		<!-- Directives -->
 		<!-- script src="js/directives/xxx.js" charset="utf-8"></script>

@@ -3,6 +3,6 @@ myApp.controller('HomeCtrl', ['$scope', '$rootScope', function ($scope, $rootSco
   $scope.windowInfo = function () {
     $scope.info = 'Window Size: ('
       + $rootScope.WINDOW_WIDTH + 'px x '
-      + $rootScope.WINDOW_WIDTH + 'px)';
+      + $rootScope.WINDOW_HEIGHT + 'px)';
   }
 }]);
