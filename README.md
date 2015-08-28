@@ -6,9 +6,9 @@ Es potente, pero no debemos pensar en que nos va a resolver la vida de cara a en
 
 Este framework está muy orientado al modelo MVC:
 
-- Model -> representado por los **servicios**, **factorías**, **providers**
-- View -> equivale a las **vistas** o **plantillas** HTML
-- Controller -> se corresponde con **controladores**
+- Model -> representado por los **servicios**, **factorías**, **providers**.
+- View -> equivale a las **vistas** o **plantillas** HTML.
+- Controller -> se corresponde con **controladores**.
 
 
 - [Módulo principal](#módulo-principal)
