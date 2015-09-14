@@ -6,7 +6,7 @@ Es potente, pero no debemos pensar en que nos va a resolver la vida de cara a en
 
 Este framework está muy orientado al modelo MVC:
 
-- Model -> representado por los **servicios**, **factorías**, **providers**
+- Model -> representado por el **scope** (tambien **servicios**, **factorías**, **providers**)
 - View -> equivale a las **vistas** o **plantillas** _HTML_
 - Controller -> se corresponde con **controladores**
 
@@ -68,13 +68,34 @@ Como podemos ver en los ejemplos, hay muchos módulos de terceros que ofrecen di
 **NOTA:** *A la hora de elegir el nombre de un módulo, se recomienda usar un espacio de nombres, para evitar posibles conflictos con módulos externos*
 
 ### Controladores
+Un Controlador viene definido por una función constructora y se usa para configurar el scope de Angular.
+
+Al usar un controlador con "ng-controller", Angular creará una nueva instancia de dicho controlador. Se creará un nuevo "child scope" que estará disponible en la función constructora y se podrá inyectar como $scope.
+
+WIP:
+		If the controller has been attached using the controller as syntax then the controller instance will be   assigned to a property on the new scope.
+
+		Use controllers to:
+
+		Set up the initial state of the $scope object.
+		Add behavior to the $scope object.
+		Do not use controllers to:
+
+		Manipulate DOM — Controllers should contain only business logic. Putting any presentation logic into   Controllers significantly affects its testability. Angular has databinding for most cases and directives   to encapsulate manual DOM manipulation.
+		Format input — Use angular form controls instead.
+		Filter output — Use angular filters instead.
+		Share code or state across controllers — Use angular services instead.
+		Manage the life-cycle of other components (for example, to create service instances).
 ```
 myApp.controller("MainCtrl", ["$window", function($window) {
 	$window.alert("Hello World!!");
 }]);
 ```
 #### Scope
-En el objeto $scope se almacenan todas las variables dentro del ámbito del controlador. En el HTML, todo lo que se encuentre dentro de la directiva ng-controller=”mainController es controlable desde el objeto $scope.
+El Scope es un objeto que almacena el modelo de la aplicación.
+
+En el objeto $scope se almacenan todas las variables dentro del ámbito del controlador. En el HTML, todo lo que se encuentre dentro de la directiva ng-controller=”mainController" es accesible desde el objeto $scope.
+
 ```
 myApp.controller("MainCtrl", ["$scope", function($scope) {
 	// Your code here, i.e.:
