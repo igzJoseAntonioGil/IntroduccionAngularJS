@@ -7,10 +7,10 @@ Es potente, pero no debemos pensar en que nos va a resolver la vida de cara a en
 Este framework está muy orientado al modelo MVC:
 
 - Model -> representado por los **servicios**, **factorías**, **providers**
-- View -> equivale a las **vistas** o **plantillas** HTML
+- View -> equivale a las **vistas** o **plantillas** _HTML_
 - Controller -> se corresponde con **controladores**
 
-
+#### Tabla de contenidos
 - [Módulo principal](#módulo-principal)
 - [Controladores](#controladores)
 	- [Scope](#scope)
@@ -201,7 +201,7 @@ Para ello, en Angular se utiliza el módulo *ngRoute*, el cual permite configura
 
 - Curso de AngularJS en Code School: https://www.codeschool.com/courses/shaping-up-with-angular-js
 - Tutorial oficial de AngularJS: https://docs.angularjs.org/tutorial
-- API reference de AngularJS: https://docs.angularjs.org/api
 - Blog con temas de AngularJS en español: https://carlosazaustre.es/blog/tag/angularjs/
+- API reference de AngularJS: https://docs.angularjs.org/api
 
 - URL este tutorial (GitHub): https://github.com/igzJoseAntonioGil/IntroduccionAngularJS
