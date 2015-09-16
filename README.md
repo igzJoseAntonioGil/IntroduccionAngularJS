@@ -132,35 +132,46 @@ myApp.directive("productRow", ["$rootScope", function($rootScope) {
 	};
 }]);
 ```
+
+Ejemplos:
+- http://jsfiddle.net/JoseAntonioGil/232y12a6/
+
 #### Directivas de Angular
 A continuación, se indica un listado con las directivas mas usadas que vienen incluídas en AngularJS:
 
 - **ng-model**: permite asociar el valor de una variable al valor del elemento HTML (proporcionando two-way-binding)
+
 	```
 		<input type="text" name="login" ng-model="user.login" />
 	```
 - **ng-bind**: asocia el valor de una expresión al contenido (innerHTML) del elemento
+
 	```
 		<div class="username" ng-bind="user.login"></div>
 	```
 - **ng-repeat**: permite recorrer todos los elemento de un array o las propiedades de un objeto
+
 	```
 		<li class="menutItem" ng-repeat="item in ['Inicio', 'Productos', 'Contacto', 'Ayuda']"></li>
 	```
 - **ng-class**: establece una clase CSS en función del valor de una expresión
+
 	```
 		<div ng-class="{'redNumbers': cuenta.saldo < 0}" ng-bind="cuenta.saldo"></div>
 	```
 - **ng-disabled**: activa o desactiva un elemento según el valor de una expresión
+
 	```
 		<button ng-disabled="isValidForm" ng-bind="Enviar"></button>
 	```
 - **ng-show/ng-hide**: muestra u oculta un elemento si se cumple una condición
+
 	```
 		<div class="adminBtns" ng-show="isAdmin"></div>
 		<div class="options" ng-hide="notLogged"></div>
 	```
 - **ng-change/ng-click/...** (events): permite asociar un manejador (listener) al evento en cuestión
+
 	```
 		<button ng-click="Enviar()" ng-bind="Enviar"></button>
 		<button ng-mouseenter="Resaltar(true)" ng-mouseleave="Resaltar(false)" ng-bind="Enviar"></button>
@@ -168,6 +179,13 @@ A continuación, se indica un listado con las directivas mas usadas que vienen i
 	```
 
 #### Isolated Scope
+
+https://umur.io/angularjs-directives-using-isolated-scope-with-attributes/
+
+- Text Binding (Prefix: @)
+- One-way Binding (Prefix: &)
+- Two-way Binding (Prefix: =)
+
 ```
 myApp.directive("productRow", ["$rootScope", function($rootScope) {
 
@@ -187,7 +205,7 @@ myApp.directive("productRow", ["$rootScope", function($rootScope) {
 ```
 
 Ejemplos:
-- http://jsfiddle.net/JoseAntonioGil/232y12a6/
+- http://jsfiddle.net/JoseAntonioGil/5p1jezcc/
 
 ### Servicios
 ```
