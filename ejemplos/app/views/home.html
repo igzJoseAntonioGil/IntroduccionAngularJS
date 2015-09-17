@@ -2,7 +2,26 @@
   <h2>Home</h2>
 
   <div>
-    <input type="button" value="Load info" ng-click="windowInfo()" />
-    <p ng-bind="info"></p>
+    <form ng-submit="addClock()">
+      Ciudad: <input type="text" ng-model="clock.ciudad" /><br/>
+      Diferencia horaria: <input type="number" ng-model="clock.diferencia" /><br/>
+      <input type="submit" value="Añadir" />
+    </form>
+
+    <ul>
+      <li style="display: inline-block;" ng-repeat="reloj in listaRelojes">
+        <reloj-svg ciudad="{{reloj.ciudad}}" diferencia="{{reloj.diferencia}}" on-delete="deleteClock"></reloj-svg>
+      </li>
+      <!--li style="display: inline-block;">
+        <reloj-svg title="España" timezone="0"></reloj-svg>
+      </li>
+      <li style="display: inline-block;">
+        <reloj-svg title="Ecuador" timezone="-6"></reloj-svg>
+      </li>
+      <li style="display: inline-block;">
+        <reloj-svg title="UK" timezone="-1"></reloj-svg>
+      </li-->
+    </ul>
+
   </div>
 </div>

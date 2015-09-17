@@ -16,9 +16,10 @@ Este framework está muy orientado al modelo MVC:
 	- [Scope](#scope)
 	- [RootScope](#rootscope)
 - [Directivas](#directivas)
+	- [Directivas de Angular](#directivas-de-angular)
 	- [Isolated Scope](#isolated-scope)
 - [Servicios](#servicios)
-	- [Servicios de AngularJS](#servicios-de-angularjs)
+	- [Servicios de Angular](#servicios-de-angular)
 	- [Router](#router)
 - [Enlaces de utilidad](#enlaces-de-utilidad)
 
@@ -28,8 +29,13 @@ Este framework está muy orientado al modelo MVC:
 El módulo principal es lo que define una aplicación de Angular, a partir de la cual se construyen todos los elementos que necesitaremos en la aplicación.
 Generalmente, para evitar conflictos, solo hay un módulo por aplicación, el cual se define de la siguiente forma:
 
+JavaScript
 ```
 var myApp = angular.module("myApp", []);
+```
+HTML
+```
+<html ng-app="myApp">
 ```
 
 El primer parámetro es el nombre que le daremos a nuestra aplicación, mientras que el segundo parámetro es una lista de módulos adicionales que queremos cargar en nuestra app.
@@ -60,7 +66,6 @@ Por ejemplo, los módulos anteriores, corresponden con los siguientes scripts:
 <script src='js/vendor/ngDialog.js'></script>
 <script src='js/vendor/angular-translate.min.js'></script>
 <script src='js/vendor/angular-translate-loader-static-files.js'></script>
-
 ```
 
 Como podemos ver en los ejemplos, hay muchos módulos de terceros que ofrecen diversas funcionalidades y, por supuesto, tambien podemos desarrollar nuestros propios módulos para reutilizarlos posteriormente.
@@ -73,7 +78,7 @@ Un Controlador viene definido por una función constructora y se usa para config
 Al usar un controlador con "ng-controller", Angular creará una nueva instancia de dicho controlador. Se creará un nuevo "child scope" que estará disponible en la función constructora y se podrá inyectar como $scope.
 
 WIP:
-		If the controller has been attached using the controller as syntax then the controller instance will be   assigned to a property on the new scope.
+		If the controller has been attached using the controller as syntax then the controller instance will be assigned to a property on the new scope.
 
 		Use controllers to:
 
@@ -86,30 +91,49 @@ WIP:
 		Filter output — Use angular filters instead.
 		Share code or state across controllers — Use angular services instead.
 		Manage the life-cycle of other components (for example, to create service instances).
+
+JavaScript
 ```
 myApp.controller("MainCtrl", ["$window", function($window) {
 	$window.alert("Hello World!!");
 }]);
 ```
-#### Scope
-El Scope es un objeto que almacena el modelo de la aplicación.
-
-En el objeto $scope se almacenan todas las variables dentro del ámbito del controlador. En el HTML, todo lo que se encuentre dentro de la directiva ng-controller=”mainController" es accesible desde el objeto $scope.
-
+HTML
 ```
-myApp.controller("MainCtrl", ["$scope", function($scope) {
+<div ng-controller="MainCtrl"></div>
+```
+
+#### Scope
+Los scopes son objetos que permiten la separación entre el modelo y la vista, mediante la observación de los cambios que se producen en el modelo.
+También facilitan la emsión y suscripción de eventos ($emit, $watch).
+
+En el controlador, dentro del objeto $scope, se almacenan todas las variables del ámbito de dicho controlador. En el HTML (vista), todo lo que se encuentre dentro de la directiva ng-controller="mainController" es accesible/puede acceder al objeto $scope.
+```
+myApp.controller("MainCtrl", ["$scope", "$window", function($scope, $window) {
 	// Your code here, i.e.:
 	$window.alert("Hello World!!");
 }]);
 ```
+
 #### RootScope
+Todas aplicaciones de AngularJS tienen un único "root scope" y todos los demás scopes son descendientes de éste.
+
+Para utilizarlo, utilizaremos el servicio "$rootScope" perteneciente al núcleo de AngularJS:
 ```
+myApp.controller("MainCtrl", ["$scope", "$rootScope", function($scope, $rootScope) {
+	$rootScope.version = "1.0.2";
+}]);
 ```
+
+[Más info][https://docs.angularjs.org/guide/scope]
 
 Ejemplos:
 - http://jsfiddle.net/JoseAntonioGil/nhwvk9wb/
 
 ### Directivas
+A grandes rasgos, las directivas son marcadores de los elementos DOM (como atributos, elementos, comentarios o clases CSS), que le dicen al compilador de HTML de AngularJS que asigne un comportamiento concreto a dicho elemento DOM (p.e. mediante escuchadores de eventos), o incluso transformando el propio elemento DOM y sus hijos.
+
+JavaScript
 ```
 myApp.directive("productRow", ["$rootScope", function($rootScope) {
 
@@ -132,6 +156,11 @@ myApp.directive("productRow", ["$rootScope", function($rootScope) {
 	};
 }]);
 ```
+HTML
+```
+<product-row></product-row>
+<div product-row></div>
+```
 
 Ejemplos:
 - http://jsfiddle.net/JoseAntonioGil/232y12a6/
@@ -140,38 +169,42 @@ Ejemplos:
 A continuación, se indica un listado con las directivas mas usadas que vienen incluídas en AngularJS:
 
 - **ng-model**: permite asociar el valor de una variable al valor del elemento HTML (proporcionando two-way-binding)
-
 	```
 		<input type="text" name="login" ng-model="user.login" />
 	```
-- **ng-bind**: asocia el valor de una expresión al contenido (innerHTML) del elemento
 
+- **ng-bind**: asocia el valor de una expresión al contenido (innerHTML) del elemento
 	```
 		<div class="username" ng-bind="user.login"></div>
 	```
-- **ng-repeat**: permite recorrer todos los elemento de un array o las propiedades de un objeto
 
+- **ng-repeat**: permite recorrer todos los elementos de un array o las propiedades de un objeto
 	```
 		<li class="menutItem" ng-repeat="item in ['Inicio', 'Productos', 'Contacto', 'Ayuda']"></li>
 	```
-- **ng-class**: establece una clase CSS en función del valor de una expresión
 
+- **ng-class**: establece una clase CSS en función del valor de una expresión
 	```
 		<div ng-class="{'redNumbers': cuenta.saldo < 0}" ng-bind="cuenta.saldo"></div>
 	```
-- **ng-disabled**: activa o desactiva un elemento según el valor de una expresión
 
+- **ng-disabled**: activa o desactiva un elemento según el valor de una expresión
 	```
 		<button ng-disabled="isValidForm" ng-bind="Enviar"></button>
 	```
-- **ng-show/ng-hide**: muestra u oculta un elemento si se cumple una condición
 
+- **ng-show/ng-hide**: muestra u oculta un elemento si se cumple una condición
 	```
 		<div class="adminBtns" ng-show="isAdmin"></div>
 		<div class="options" ng-hide="notLogged"></div>
 	```
-- **ng-change/ng-click/...** (events): permite asociar un manejador (listener) al evento en cuestión
 
+- **ng-if**: muestra un elemento si se cumple una condición. A diferencia de los dos ejemplos anteriores (ng-show y ng-hide), "ng-if" no renderiza el contenido cuando no se cumple la condición.
+	```
+		<div class="adminBtns" ng-if="isAdmin"></div>
+	```
+
+- **ng-change/ng-click/...** (events): permite asociar un manejador (listener) al evento en cuestión
 	```
 		<button ng-click="Enviar()" ng-bind="Enviar"></button>
 		<button ng-mouseenter="Resaltar(true)" ng-mouseleave="Resaltar(false)" ng-bind="Enviar"></button>
@@ -179,13 +212,13 @@ A continuación, se indica un listado con las directivas mas usadas que vienen i
 	```
 
 #### Isolated Scope
-
 https://umur.io/angularjs-directives-using-isolated-scope-with-attributes/
 
 - Text Binding (Prefix: @)
 - One-way Binding (Prefix: &)
 - Two-way Binding (Prefix: =)
 
+JavaScript
 ```
 myApp.directive("productRow", ["$rootScope", function($rootScope) {
 
@@ -194,7 +227,7 @@ myApp.directive("productRow", ["$rootScope", function($rootScope) {
 		"require": "^productGrid",
 		"scope": {
 			"data": "=",
-			"gridType": "@"
+			"stringData": "@"
 		},
 		"templateUrl": "templates/products/product_grid_row.html",
 		"link": function($scope, tElement, tAttrs, ProductGridCtrl) {
@@ -202,6 +235,11 @@ myApp.directive("productRow", ["$rootScope", function($rootScope) {
 		}
 	};
 }]);
+```
+HTML
+```
+<product-row data="user" stringData="{{user.nombre}}"></product-row>
+<div product-row data="status" stringData="Esto es una cadena"></div>
 ```
 
 Ejemplos:
@@ -228,7 +266,7 @@ myApp.factory("ProductTypes", ["ProductTypesService", function(ProductTypesServi
 }]);
 ```
 
-#### Servicios de AngularJS
+#### Servicios de Angular
 [**$http**](https://docs.angularjs.org/api/ng/service/$http)
 The $http service is a core Angular service that facilitates communication with the remote HTTP servers via the browser's XMLHttpRequest object or via JSONP.
 ```
@@ -254,7 +292,7 @@ Para ello, en Angular se utiliza el módulo *ngRoute*, el cual permite configura
 
 - Curso de AngularJS en Code School: https://www.codeschool.com/courses/shaping-up-with-angular-js
 - Tutorial oficial de AngularJS: https://docs.angularjs.org/tutorial
-- Blog con temas de AngularJS en español: https://carlosazaustre.es/blog/tag/angularjs/
+- Blog con temas de AngularJS en español: https://carlosazaustre.es/blog/tag/angularjs
 - API reference de AngularJS: https://docs.angularjs.org/api
 
 - URL este tutorial (GitHub): https://github.com/igzJoseAntonioGil/IntroduccionAngularJS
