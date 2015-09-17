@@ -78,7 +78,7 @@ Un Controlador viene definido por una función constructora y se usa para config
 Al usar un controlador con "ng-controller", Angular creará una nueva instancia de dicho controlador. Se creará un nuevo "child scope" que estará disponible en la función constructora y se podrá inyectar como $scope.
 
 WIP:
-		If the controller has been attached using the controller as syntax then the controller instance will be assigned to a property on the new scope.
+		If the controller has been attached using the "controller as" syntax then the controller instance will be assigned to a property on the new scope.
 
 		Use controllers to:
 
@@ -94,13 +94,16 @@ WIP:
 
 JavaScript
 ```
-myApp.controller("MainCtrl", ["$window", function($window) {
-	$window.alert("Hello World!!");
-}]);
-```
+var myApp = angular.module('myApp',[]);
+
+myApp.controller('GreetingController', ['$scope', function($scope) {
+  $scope.greeting = 'Hola!';
+}]);```
 HTML
 ```
-<div ng-controller="MainCtrl"></div>
+<div ng-controller="GreetingController">
+  {{ greeting }}
+</div>
 ```
 
 #### Scope
@@ -113,6 +116,25 @@ myApp.controller("MainCtrl", ["$scope", "$window", function($scope, $window) {
 	// Your code here, i.e.:
 	$window.alert("Hello World!!");
 }]);
+```
+
+#### Notación "controller as"
+Al utilizar un controlador, se puede utilizar un alias, mediante el uso de "controller as", lo que da al controlador un comportamiento diferente:
+
+HTML
+```
+<div ng-controller="GreetingController controller as greetCtrl">
+  {{ greetCtrl.greeting }}
+</div>
+```
+
+Esta notación tambien implica cambios en la definición del controlador, donde el $scope "desaparece" y hacemos uso del objeto "this":
+
+JavaScript
+```
+app.controller('MainCtrl', function () {
+  this.title = 'Some title';
+});
 ```
 
 #### RootScope
