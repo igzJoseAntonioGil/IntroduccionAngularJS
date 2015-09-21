@@ -1,0 +1,13 @@
+<span class="ficha-modelo">
+	<div ng-bind="modelo.name"></div>
+	<ul>
+		<li ng-repeat="version in modelo.versions | orderBy : 'base_price'">
+			<p ng-bind="version.title + ' desde: ' + (version.base_price | currency : '€' : 0)"></p>
+			<p>Acabados:
+				<span ng-repeat="acabado in version.editions">
+					{{acabado + ($last ? "" : ", ")}}
+				</span>
+			</p>
+		</li>
+	</ul>
+</span>

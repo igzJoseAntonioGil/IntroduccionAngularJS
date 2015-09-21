@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+	<head>
+		<meta charset="utf-8">
+		<title>Introducción a AngujarJS</title>
+
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+	</head>
+	<body ng-controller="MainCtrl">
+
+		<div class="pure-g">
+				<div class="pure-u-4-24"></div>
+				<div class="pure-u-16-24">
+
+					<nav class="pure-menu pure-menu-horizontal">
+						<ul class="pure-menu-list">
+							<li class="pure-menu-item" ng-repeat="item in menuItems" ng-class="{'pure-menu-selected': item.title === selectedItem}">
+								<a href="#{{item.url}}"
+									ng-bind="item.title"
+									ng-click="selectMenuItem(item.title)"
+									class="pure-menu-link"></a>
+							</li>
+						</ul>
+					</nav>
+
+					<!-- Directiva que se utiliza para realizar la navegación con ngRoute -->
+					<div ng-view></div>
+
+				</div>
+				<div class="pure-u-4-24"></div>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js" charset="utf-8"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js" charset="utf-8"></script>
+
+		<script src="js/app.js" charset="utf-8"></script>
+
+		<!-- Services -->
+		<script src="js/services/navigation.js" charset="utf-8"></script>
+		<script src="js/services/modelos.js" charset="utf-8"></script>
+		<script src="js/services/reloj.js" charset="utf-8"></script>
+
+		<!-- Controllers -->
+		<script src="js/controllers/main.js" charset="utf-8"></script>
+		<script src="js/controllers/home.js" charset="utf-8"></script>
+		<script src="js/controllers/about.js" charset="utf-8"></script>
+		<script src="js/controllers/ofertas.js" charset="utf-8"></script>
+		<script src="js/controllers/modelos.js" charset="utf-8"></script>
+
+		<!-- Directives -->
+		<script src="js/directives/modelos.js" charset="utf-8"></script>
+		<script src="js/directives/reloj.js" charset="utf-8"></script>
+
+	</body>
+</html>

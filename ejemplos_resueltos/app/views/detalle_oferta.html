@@ -1,0 +1,21 @@
+<div>
+  <h2>Ofertas</h2>
+
+  <div>Detalle de oferta</div>
+  <fieldset>
+    <legend ng-bind="oferta.title"></legend>
+    <div>
+      <div>
+        <strong>Descripción:</strong><br/>
+        <span ng-bind="oferta.description"></span>
+      </div>
+      <div>
+        <strong>Precio:</strong> <span ng-bind="oferta.price | currency : '€' : 2"></span>
+      </div>
+      <div>
+        <strong>Válido hasta:</strong> <span ng-bind="oferta.endDate | date"></span>
+      </div>
+    </div>
+  </fieldset>
+  <a href="#/ofertas"><< Volver al listado</a>
+</div>

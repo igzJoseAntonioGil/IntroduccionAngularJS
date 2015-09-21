@@ -1,0 +1,23 @@
+<div>
+  <h2>Modelos</h2>
+  <hr>
+  <!--div>Listado de modelos</div-->
+  <div id="listado">
+  	<!--ficha-modelo ng-repeat="modelo in modelos"></ficha-modelo-->
+  	<!--span ficha-modelo ng-repeat="modelo in modelos"></span-->
+
+  	<table class="pure-table">
+      <thead>
+    		<tr>
+    			<td>Modelo</td>
+    			<td>Precio base</td>
+    			<td>#</td>
+    		</tr>
+      </thead>
+      <tbody>
+        <tr ficha-modelo ng-repeat="modelo in modelos"></tr>
+      </tbody>
+  	</table>
+
+  </div>
+</div>

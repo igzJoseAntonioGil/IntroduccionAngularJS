@@ -1,0 +1,3 @@
+<td ng-bind="modelo.name"></td>
+<td ng-repeat="version in modelo.versions | orderBy : 'base_price' | limitTo : 1" ng-bind="version.base_price | currency : '€'"></td>
+<td><a href="#/modelos/{{modelo.id}}">ver detalle >></a></td>

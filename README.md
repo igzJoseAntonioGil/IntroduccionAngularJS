@@ -16,8 +16,8 @@ Este framework está muy orientado al modelo MVC:
 	- [Scope](#scope)
 	- [RootScope](#rootscope)
 - [Directivas](#directivas)
-	- [Directivas de Angular](#directivas-de-angular)
 	- [Isolated Scope](#isolated-scope)
+	- [Directivas de Angular](#directivas-de-angular)
 - [Servicios](#servicios)
 	- [Servicios de Angular](#servicios-de-angular)
 	- [Router](#router)
@@ -77,21 +77,6 @@ Un Controlador viene definido por una función constructora y se usa para config
 
 Al usar un controlador con "ng-controller", Angular creará una nueva instancia de dicho controlador. Se creará un nuevo "child scope" que estará disponible en la función constructora y se podrá inyectar como $scope.
 
-WIP:
-		If the controller has been attached using the "controller as" syntax then the controller instance will be assigned to a property on the new scope.
-
-		Use controllers to:
-
-		Set up the initial state of the $scope object.
-		Add behavior to the $scope object.
-		Do not use controllers to:
-
-		Manipulate DOM — Controllers should contain only business logic. Putting any presentation logic into   Controllers significantly affects its testability. Angular has databinding for most cases and directives   to encapsulate manual DOM manipulation.
-		Format input — Use angular form controls instead.
-		Filter output — Use angular filters instead.
-		Share code or state across controllers — Use angular services instead.
-		Manage the life-cycle of other components (for example, to create service instances).
-
 JavaScript
 ```
 var myApp = angular.module('myApp',[]);
@@ -106,11 +91,24 @@ HTML
 </div>
 ```
 
+Los controladores se usan para:
+
+- Inicializar el objeto $scope.
+- Definir el comportamiento del $scope (añadiendo variables y métodos).
+
+Los controladores no se usan para:
+
+- Manipular el DOM: Los controladores sólo deben encargarse de la lógica de negocio.	Para la lógica de presentación, podemos usar el "data-binding" o las directivas (para realizar la manipulación del DOM), ya que hacerlo en los controladores, puede afectar significativamente su testabilidad.
+- Formatear los datos de entrada: Use angular form controls instead.
+- Filtrar los datos de salida: Para ello se usan los filtros de angular.
+- Compartir código entre controladores: En lugar de eso, es mejor usar servicios.
+- Manejar el ciclo de vida de otros componentes (por ejemplo, para crear instancias de un servicio).
+
 #### Scope
 Los scopes son objetos que permiten la separación entre el modelo y la vista, mediante la observación de los cambios que se producen en el modelo.
 También facilitan la emsión y suscripción de eventos ($emit, $watch).
 
-En el controlador, dentro del objeto $scope, se almacenan todas las variables del ámbito de dicho controlador. En el HTML (vista), todo lo que se encuentre dentro de la directiva ng-controller="mainController" es accesible/puede acceder al objeto $scope.
+En el controlador, dentro del objeto $scope, se almacenan todas las variables del ámbito de dicho controlador. En el HTML (vista), todo lo que se encuentre dentro de la directiva ng-controller="" es accesible/puede acceder al objeto $scope.
 ```
 myApp.controller("MainCtrl", ["$scope", "$window", function($scope, $window) {
 	// Your code here, i.e.:
@@ -119,7 +117,7 @@ myApp.controller("MainCtrl", ["$scope", "$window", function($scope, $window) {
 ```
 
 #### Notación "controller as"
-Al utilizar un controlador, se puede utilizar un alias, mediante el uso de "controller as", lo que da al controlador un comportamiento diferente:
+Al utilizar un controlador, se puede utilizar un alias, mediante el uso de "controller as", lo que da al controlador un comportamiento diferente. En estos casos, el controlador se comporta como si fuese una propiedad más del nuevo "scope" y las variables que definamos, formarán parte del controlador:
 
 HTML
 ```
@@ -157,81 +155,29 @@ A grandes rasgos, las directivas son marcadores de los elementos DOM (como atrib
 
 JavaScript
 ```
-myApp.directive("productRow", ["$rootScope", function($rootScope) {
-
-	return {
-		"restrict": "EA",
-		"require": "^productGrid",
-		"templateUrl": "templates/products/product_grid_row.html",
-		"link": function($scope, tElement, tAttrs, ProductGridCtrl) {
-
-			var _OpenCountryDetail = function(p_country) {
-					ProductGridCtrl.OpenWorldDetail(null, p_country);
-				},
-				_Init = function() {
-					$scope.OpenCountryDetail = _OpenCountryDetail;
-					ProductGridCtrl.UpdateTotal($scope.data.totalRevenue, 0);
-				};
-
-			_Init();
-		}
-	};
-}]);
+angular.module('docsRestrictDirective', [])
+	.controller('Controller', ['$scope', function($scope) {
+		$scope.customer = {
+			name: 'Naomi',
+			address: '1600 Amphitheatre'
+		};
+	}])
+	.directive('myCustomer', function() {
+		return {
+			restrict: 'E',
+			templateUrl: 'my-customer.html'
+		};
+	});
 ```
 HTML
 ```
-<product-row></product-row>
-<div product-row></div>
+<div ng-controller="Controller">
+	<my-customer></my-customer>
+</div>
 ```
 
 Ejemplos:
 - http://jsfiddle.net/JoseAntonioGil/232y12a6/
-
-#### Directivas de Angular
-A continuación, se indica un listado con las directivas mas usadas que vienen incluídas en AngularJS:
-
-- **ng-model**: permite asociar el valor de una variable al valor del elemento HTML (proporcionando two-way-binding)
-	```
-		<input type="text" name="login" ng-model="user.login" />
-	```
-
-- **ng-bind**: asocia el valor de una expresión al contenido (innerHTML) del elemento
-	```
-		<div class="username" ng-bind="user.login"></div>
-	```
-
-- **ng-repeat**: permite recorrer todos los elementos de un array o las propiedades de un objeto
-	```
-		<li class="menutItem" ng-repeat="item in ['Inicio', 'Productos', 'Contacto', 'Ayuda']"></li>
-	```
-
-- **ng-class**: establece una clase CSS en función del valor de una expresión
-	```
-		<div ng-class="{'redNumbers': cuenta.saldo < 0}" ng-bind="cuenta.saldo"></div>
-	```
-
-- **ng-disabled**: activa o desactiva un elemento según el valor de una expresión
-	```
-		<button ng-disabled="isValidForm" ng-bind="Enviar"></button>
-	```
-
-- **ng-show/ng-hide**: muestra u oculta un elemento si se cumple una condición
-	```
-		<div class="adminBtns" ng-show="isAdmin"></div>
-		<div class="options" ng-hide="notLogged"></div>
-	```
-
-- **ng-if**: muestra un elemento si se cumple una condición. A diferencia de los dos ejemplos anteriores (ng-show y ng-hide), "ng-if" no renderiza el contenido cuando no se cumple la condición.
-	```
-		<div class="adminBtns" ng-if="isAdmin"></div>
-	```
-
-- **ng-change/ng-click/...** (events): permite asociar un manejador (listener) al evento en cuestión
-	```
-		<button ng-click="Enviar()" ng-bind="Enviar"></button>
-		<button ng-mouseenter="Resaltar(true)" ng-mouseleave="Resaltar(false)" ng-bind="Enviar"></button>
-		<form ng-submit="SubmitForm()"></form>
-	```
 
 #### Isolated Scope
 https://umur.io/angularjs-directives-using-isolated-scope-with-attributes/
@@ -242,55 +188,104 @@ https://umur.io/angularjs-directives-using-isolated-scope-with-attributes/
 
 JavaScript
 ```
-myApp.directive("productRow", ["$rootScope", function($rootScope) {
-
-	return {
-		"restrict": "EA",
-		"require": "^productGrid",
-		"scope": {
-			"data": "=",
-			"stringData": "@"
-		},
-		"templateUrl": "templates/products/product_grid_row.html",
-		"link": function($scope, tElement, tAttrs, ProductGridCtrl) {
-			...
-		}
-	};
-}]);
+angular.module('docsIsolateScopeDirective', [])
+	.controller('Controller', ['$scope', function($scope) {
+		$scope.naomi = { name: 'Naomi', address: '1600 Amphitheatre' };
+		$scope.igor = { name: 'Igor', address: '123 Somewhere' };
+	}])
+	.directive('myCustomer', function() {
+		return {
+			restrict: 'E',
+			scope: {
+				customerInfo: '=info'
+			},
+			templateUrl: 'my-customer-iso.html'
+		};
+	});
 ```
 HTML
 ```
-<product-row data="user" stringData="{{user.nombre}}"></product-row>
-<div product-row data="status" stringData="Esto es una cadena"></div>
+<div ng-controller="Controller">
+	<my-customer info="naomi"></my-customer>
+	<hr>
+	<my-customer info="igor"></my-customer>
+</div>
 ```
 
 Ejemplos:
 - http://jsfiddle.net/JoseAntonioGil/5p1jezcc/
 
+#### Directivas de Angular
+A continuación, se indica un listado con las directivas mas usadas que vienen incluídas en AngularJS:
+
+- **ng-model**: permite asociar el valor de una variable al valor del elemento HTML (proporcionando two-way-binding)
+	```
+		<input type="text" name="login" ng-model="user.login" />
+	```
+- **ng-bind**: asocia el valor de una expresión al contenido (innerHTML) del elemento
+	```
+		<div class="username" ng-bind="user.login"></div>
+	```
+- **ng-repeat**: permite recorrer todos los elementos de un array o las propiedades de un objeto
+	```
+		<li class="menutItem" ng-repeat="item in ['Inicio', 'Productos', 'Contacto', 'Ayuda']"></li>
+	```
+- **ng-class**: establece una clase CSS en función del valor de una expresión
+	```
+		<div ng-class="{'redNumbers': cuenta.saldo < 0}" ng-bind="cuenta.saldo"></div>
+	```
+- **ng-disabled**: activa o desactiva un elemento según el valor de una expresión
+	```
+		<button ng-disabled="isValidForm" ng-bind="Enviar"></button>
+	```
+- **ng-show/ng-hide**: muestra u oculta un elemento si se cumple una condición
+	```
+		<div class="adminBtns" ng-show="isAdmin"></div>
+		<div class="options" ng-hide="notLogged"></div>
+	```
+- **ng-if**: muestra un elemento si se cumple una condición. A diferencia de los dos ejemplos anteriores (ng-show y ng-hide), "ng-if" no renderiza el contenido cuando no se cumple la condición.
+	```
+		<div class="adminBtns" ng-if="isAdmin"></div>
+	```
+- **ng-change/ng-click/...** (events): permite asociar un manejador (listener) al evento en cuestión
+	```
+		<button ng-click="Enviar()" ng-bind="Enviar"></button>
+		<button ng-mouseenter="Resaltar(true)" ng-mouseleave="Resaltar(false)" ng-bind="Enviar"></button>
+		<form ng-submit="SubmitForm()"></form>
+	```
+
 ### Servicios
+Los servicios de Angular son objetos *sustituibles* que se pueden conectar entre sí mediante la inyección de dependencias (DI). Además, se pueden usar para organizar y compartir código/datos entre diferentes componentes de una aplicación.
+
+Los servicios de angular son:
+
+- *Instanciación perezosa*: Angular solo instancia un servicio cuando un componente de la aplicación depende de él.
+- *Singletons*: Todas los componentes que dependen de un servicio reciben una referencia a una única instacia del mismo, generada por el constructor del servicio.
+
+Angular ofrece varios servicios muy útiles ([como $http](#servicios-de-angular)), pero también es posible crear nuestros propios servicios y usarlos en nuestra aplicación.
 ```
-myApp.factory("ProductTypes", ["ProductTypesService", function(ProductTypesService) {
-
-	var
-		_data,
-		_Init = function() {
-			ProductTypesService.get(_ProductTypesLoaded);
-			_Init = angular.noop;
+angular
+	.module('myServiceModule', [])
+	.controller('MyController', ['$scope','notify', function ($scope, notify) {
+		$scope.callNotify = function(msg) {
+			notify(msg);
 		};
-
-	_Init();
-
-	return {
-		"Get": function() {
-			return _data;
-		}
-	};
-}]);
+	}])
+	.factory('notify', ['$window', function(win) {
+		var msgs = [];
+		return function(msg) {
+			msgs.push(msg);
+			if (msgs.length == 3) {
+				win.alert(msgs.join("\n"));
+				msgs = [];
+			}
+		};
+	}]);
 ```
 
 #### Servicios de Angular
 [**$http**](https://docs.angularjs.org/api/ng/service/$http)
-The $http service is a core Angular service that facilitates communication with the remote HTTP servers via the browser's XMLHttpRequest object or via JSONP.
+El servicio $http del núcleo de Angular que facilita la comunicación con servidores HTTP remotos a través del objeto XMLHttpRequest del navegador o mediante JSONP.
 ```
 // Cuando se cargue la página, pide del API todos los TODOs
 $http.get('/api/todos')
@@ -306,15 +301,57 @@ Ejemplos:
 - http://jsfiddle.net/JoseAntonioGil/ohbrmodL/
 - http://jsfiddle.net/JoseAntonioGil/ohbrmodL/1/
 
+Otros servicios útiles de AngularJS:
+
+- **$compile**: Compiles an HTML string or DOM into a template and produces a template function, which can then be used to link scope and the template together.
+- **$filter**: Filters are used for formatting data displayed to the user.
+- **$interval**: Angular's wrapper for window.setInterval. The fn function is executed every delay milliseconds.
+- **$location**: The $location service parses the URL in the browser address bar (based on the window.location) and makes the URL available to your application. Changes to the URL in the address bar are reflected into $location service and changes to $location are reflected into the browser address bar.
+- **$log**: Simple service for logging. Default implementation safely writes the message into the browser's console (if present).
+- **$q**: A service that helps you run functions asynchronously, and use their return values (or exceptions) when they are done processing.
+- **$rootScope**: Every application has a single root scope. All other scopes are descendant scopes of the root scope. Scopes provide separation between the model and the view, via a mechanism for watching the model for changes. They also provide an event emission/broadcast and subscription facility. See the developer guide on scopes.
+- **$timeout**: Angular's wrapper for window.setTimeout. The fn function is wrapped into a try/catch block and delegates any exceptions to $exceptionHandler service.
+- **$window**: A reference to the browser's window object. While window is globally available in JavaScript, it causes testability problems, because it is a global variable. In angular we always refer to it through the $window service, so it may be overridden, removed or mocked for testing.
+
+https://docs.angularjs.org/api/ng/service
+
 ### Router
 Una de las principales ventajas de Angular es la orientación a aplicaciones SPA (single page application), las cuales consisten en la navegación dentro de la misma página, sin necesidad de recargarla, mediante la utilización de vistas/plantillas.
-Para ello, en Angular se utiliza el módulo *ngRoute*, el cual permite configurar diferentes rutas y asociarlas a otras tantas vistas.
+Para ello, en Angular se utiliza el módulo *ngRoute*, el cual permite configurar diferentes rutas y asociarlas a sendas vistas y controladores.
+
+```
+angular
+	.module('ngRouteExample', ['ngRoute'])
+	.config(function($routeProvider, $locationProvider) {
+		$routeProvider
+			.when('/Book/:bookId', {
+				templateUrl: 'book.html',
+				controller: 'BookController',
+				resolve: {
+					// I will cause a 1 second delay
+					delay: function($q, $timeout) {
+						var delay = $q.defer();
+						$timeout(delay.resolve, 1000);
+						return delay.promise;
+					}
+				}
+			})
+			.when('/Book/:bookId/ch/:chapterId', {
+				templateUrl: 'chapter.html',
+				controller: 'ChapterController'
+			});
+
+		// configure html5 to get links working on jsfiddle
+		$locationProvider.html5Mode(true);
+	});
+```
 
 ### Enlaces de utilidad
 
 - Curso de AngularJS en Code School: https://www.codeschool.com/courses/shaping-up-with-angular-js
 - Tutorial oficial de AngularJS: https://docs.angularjs.org/tutorial
 - Blog con temas de AngularJS en español: https://carlosazaustre.es/blog/tag/angularjs
+- Developer guide de AngularJS: https://docs.angularjs.org/guide
 - API reference de AngularJS: https://docs.angularjs.org/api
 
 - URL este tutorial (GitHub): https://github.com/igzJoseAntonioGil/IntroduccionAngularJS

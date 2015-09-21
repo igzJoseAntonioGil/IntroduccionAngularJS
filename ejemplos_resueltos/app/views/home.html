@@ -1,0 +1,28 @@
+<div>
+  <h2>Home</h2>
+
+  <div>
+    <form name="clockForm" ng-submit="addClock()" class="pure-form">
+      Ciudad: <input type="text" name="ciudad" ng-model="clock.ciudad" required />
+
+      <span style="color: red;" ng-show="clockForm.ciudad.$error.required">The value is required</span>
+      <br/>
+
+      Diferencia horaria: <input type="text" name="diferencia" ng-model="clock.diferencia" number />
+      <span style="color: red;" ng-show="clockForm.diferencia.$error.number">The value is not an integer</span><br/>
+
+      <input type="submit" value="Añadir" class="pure-button pure-button-primary" />
+    </form>
+
+    <ul>
+      <li style="display: inline-block;" ng-repeat="reloj in listaRelojes">
+        <reloj-svg
+          ciudad="{{reloj.ciudad}}"
+          diferencia="{{reloj.diferencia}}"
+          on-delete="deleteClock">
+        </reloj-svg>
+      </li>
+    </ul>
+
+  </div>
+</div>

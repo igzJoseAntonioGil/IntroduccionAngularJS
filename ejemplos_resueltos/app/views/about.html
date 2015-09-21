@@ -1,0 +1,425 @@
+<div>
+  <h2>About</h2>
+
+  <div>Curso de introducción a AngularJS</div>
+
+  <article class="markdown-body entry-content" itemprop="mainContentOfPage">
+    <h1>
+      <a id="user-content-introduccion-a-angularjs" class="anchor" href="#introduccion-a-angularjs" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Introduccion a AngularJS</h1>
+
+    <p>Es un framework javascript, pensado principalmente para realizar aplicaciones monopágina (SPA), con navegación mediante hashtag, por lo tanto, la definición de la aplicación debe contemplar eso de inicio.</p>
+
+    <p>Es potente, pero no debemos pensar en que nos va a resolver la vida de cara a entregarlo a desarrolladores que no se hayan pegado de lleno con este lenguaje. Es más, si venimos de un tratamiento de javascript muy rebajado por jQuery, el manejo del DOM
+      sin jQuery a través de AngularJS puede ser confuso.</p>
+
+    <p>Este framework está muy orientado al modelo MVC:</p>
+
+    <ul>
+      <li>Model -&gt; representado por el
+        <strong>scope</strong> (tambien
+        <strong>servicios</strong>,
+        <strong>factorías</strong>,
+        <strong>providers</strong>)</li>
+      <li>View -&gt; equivale a las
+        <strong>vistas</strong> o
+        <strong>plantillas</strong>
+        <em>HTML</em>
+      </li>
+      <li>Controller -&gt; se corresponde con
+        <strong>controladores</strong>
+      </li>
+    </ul>
+
+    <h4>
+      <a id="user-content-tabla-de-contenidos" class="anchor" href="#tabla-de-contenidos" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Tabla de contenidos</h4>
+
+    <ul>
+      <li><a href="#/about#user-content-m%C3%B3dulo-principal">Módulo principal</a></li>
+      <li><a href="#/about#user-content-controladores">Controladores</a>
+
+        <ul>
+          <li><a href="#/about#user-content-scope">Scope</a></li>
+          <li><a href="#/about#user-content-rootscope">RootScope</a></li>
+        </ul>
+      </li>
+      <li><a href="#/about#user-content-directivas">Directivas</a>
+
+        <ul>
+          <li><a href="#/about#user-content-directivas-de-angular">Directivas de Angular</a></li>
+          <li><a href="#/about#user-content-isolated-scope">Isolated Scope</a></li>
+        </ul>
+      </li>
+      <li><a href="#/about#user-content-servicios">Servicios</a>
+
+        <ul>
+          <li><a href="#/about#user-content-servicios-de-angular">Servicios de Angular</a></li>
+          <li><a href="#/about#user-content-router">Router</a></li>
+        </ul>
+      </li>
+      <li><a href="#/about#user-content-enlaces-de-utilidad">Enlaces de utilidad</a></li>
+    </ul>
+
+    <blockquote>
+      <p>Este curso seguirá en la medida de lo posible las reglas propuestas por la guía de estilo de <a href="https://github.com/airbnb/javascript/tree/master/es5">AirBnb</a> para ES5, salvo en casos puntuales, como ejemplos copiados de internet que no hayan
+        sido adaptados en este sentido</p>
+    </blockquote>
+
+    <h3>
+      <a id="user-content-módulo-principal" class="anchor" href="#módulo-principal" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Módulo principal</h3>
+
+    <p>El módulo principal es lo que define una aplicación de Angular, a partir de la cual se construyen todos los elementos que necesitaremos en la aplicación. Generalmente, para evitar conflictos, solo hay un módulo por aplicación, el cual se define de la
+      siguiente forma:</p>
+
+    <p>JavaScript</p>
+
+    <pre>
+      <code>var myApp = angular.module("myApp", []);
+      </code>
+    </pre>
+
+    <p>HTML</p>
+
+    <pre>
+      <code>&lt;html ng-app="myApp"&gt;
+      </code>
+    </pre>
+
+    <p>El primer parámetro es el nombre que le daremos a nuestra aplicación, mientras que el segundo parámetro es una lista de módulos adicionales que queremos cargar en nuestra app. Estos módulos suelen añadir funcionalidades concretas a la aplicación, por
+      ejemplo:</p>
+
+    <ul>
+      <li>
+        <strong>ngRoute</strong>: ofrece soporte para navegar entre vistas de nuestra aplicación</li>
+      <li>
+        <strong>ngTouch</strong>: soporte para dispositivos táctiles</li>
+      <li>
+        <strong>ngDialog</strong>: ventanas modales (formularios, mensajes, confirm, ...)</li>
+      <li>
+        <strong>pascalprecht.translate</strong>: soporte multiidioma</li>
+    </ul>
+
+    <blockquote>
+      <p>Es importante recordar que cada módulo lleva asociado uno o más ficheros JS, los cuales será necesario importar en la página HTML principal</p>
+    </blockquote>
+
+    <pre>
+      <code>// Angular application object var myApp = angular.module("myApp", [ "ngRoute", // Routing "ngTouch", // Improves ng-click on mobile devices "ngAnimate", // Adds some animation support "ngDialog", // modal dialogs directive "pascalprecht.translate"
+        // i18n localization ]);
+      </code>
+    </pre>
+
+    <p>Por ejemplo, los módulos anteriores, corresponden con los siguientes scripts:</p>
+
+    <pre>
+      <code>&lt;script src='js/vendor/angular-1.4.4-build.4121/angular-route.js'&gt;&lt;/script&gt; &lt;script src='js/vendor/angular-1.4.4-build.4121/angular-touch.js'&gt;&lt;/script&gt; &lt;script src='js/vendor/angular-1.4.4-build.4121/angular-animate.js'&gt;&lt;/script&gt;
+        &lt;script src='js/vendor/ngDialog.js'&gt;&lt;/script&gt; &lt;script src='js/vendor/angular-translate.min.js'&gt;&lt;/script&gt; &lt;script src='js/vendor/angular-translate-loader-static-files.js'&gt;&lt;/script&gt;
+      </code>
+    </pre>
+
+    <p>Como podemos ver en los ejemplos, hay muchos módulos de terceros que ofrecen diversas funcionalidades y, por supuesto, tambien podemos desarrollar nuestros propios módulos para reutilizarlos posteriormente.</p>
+
+    <p>
+      <strong>NOTA:</strong>
+      <em>A la hora de elegir el nombre de un módulo, se recomienda usar un espacio de nombres, para evitar posibles conflictos con módulos externos</em>
+    </p>
+
+    <h3>
+      <a id="user-content-controladores" class="anchor" href="#controladores" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Controladores</h3>
+
+    <p>Un Controlador viene definido por una función constructora y se usa para configurar el scope de Angular.</p>
+
+    <p>Al usar un controlador con "ng-controller", Angular creará una nueva instancia de dicho controlador. Se creará un nuevo "child scope" que estará disponible en la función constructora y se podrá inyectar como $scope.</p>
+
+    <p>WIP: If the controller has been attached using the "controller as" syntax then the controller instance will be assigned to a property on the new scope.</p>
+
+    <pre>
+      <code> Use controllers to: Set up the initial state of the $scope object. Add behavior to the $scope object. Do not use controllers to: Manipulate DOM — Controllers should contain only business logic. Putting any presentation logic into Controllers significantly
+        affects its testability. Angular has databinding for most cases and directives to encapsulate manual DOM manipulation. Format input — Use angular form controls instead. Filter output — Use angular filters instead. Share code or state across controllers
+        — Use angular services instead. Manage the life-cycle of other components (for example, to create service instances).
+      </code>
+    </pre>
+
+    <p>JavaScript</p>
+
+    <pre>
+      <code>var myApp = angular.module('myApp',[]); myApp.controller('GreetingController', ['$scope', function($scope) { $scope.greeting = 'Hola!'; }]);
+      </code>
+    </pre>
+
+    <p>HTML</p>
+
+    <pre>
+      <code>&lt;div ng-controller="GreetingController"&gt; {{ greeting }} &lt;/div&gt;
+      </code>
+    </pre>
+
+    <h4>
+      <a id="user-content-scope" class="anchor" href="#scope" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Scope</h4>
+
+    <p>Los scopes son objetos que permiten la separación entre el modelo y la vista, mediante la observación de los cambios que se producen en el modelo. También facilitan la emsión y suscripción de eventos ($emit, $watch).</p>
+
+    <p>En el controlador, dentro del objeto $scope, se almacenan todas las variables del ámbito de dicho controlador. En el HTML (vista), todo lo que se encuentre dentro de la directiva ng-controller="mainController" es accesible/puede acceder al objeto $scope.</p>
+
+    <pre>
+      <code>myApp.controller("MainCtrl", ["$scope", "$window", function($scope, $window) { // Your code here, i.e.: $window.alert("Hello World!!"); }]);
+      </code>
+    </pre>
+
+    <h4>
+      <a id="user-content-notación-controller-as" class="anchor" href="#notación-controller-as" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Notación "controller as"</h4>
+
+    <p>Al utilizar un controlador, se puede utilizar un alias, mediante el uso de "controller as", lo que da al controlador un comportamiento diferente:</p>
+
+    <p>HTML</p>
+
+    <pre>
+      <code>&lt;div ng-controller="GreetingController controller as greetCtrl"&gt; {{ greetCtrl.greeting }} &lt;/div&gt;
+      </code>
+    </pre>
+
+    <p>Esta notación tambien implica cambios en la definición del controlador, donde el $scope "desaparece" y hacemos uso del objeto "this":</p>
+
+    <p>JavaScript</p>
+
+    <pre>
+      <code>app.controller('MainCtrl', function () { this.title = 'Some title'; });
+      </code>
+    </pre>
+
+    <h4>
+      <a id="user-content-rootscope" class="anchor" href="#rootscope" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>RootScope</h4>
+
+    <p>Todas aplicaciones de AngularJS tienen un único "root scope" y todos los demás scopes son descendientes de éste.</p>
+
+    <p>Para utilizarlo, utilizaremos el servicio "$rootScope" perteneciente al núcleo de AngularJS:</p>
+
+    <pre>
+      <code>myApp.controller("MainCtrl", ["$scope", "$rootScope", function($scope, $rootScope) { $rootScope.version = "1.0.2"; }]);
+      </code>
+    </pre>
+
+    <p>[Más info][<a href="https://docs.angularjs.org/guide/scope">https://docs.angularjs.org/guide/scope</a>]</p>
+
+    <p>Ejemplos:</p>
+
+    <ul>
+      <li><a href="http://jsfiddle.net/JoseAntonioGil/nhwvk9wb/">http://jsfiddle.net/JoseAntonioGil/nhwvk9wb/</a></li>
+    </ul>
+
+    <h3>
+      <a id="user-content-directivas" class="anchor" href="#directivas" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Directivas</h3>
+
+    <p>A grandes rasgos, las directivas son marcadores de los elementos DOM (como atributos, elementos, comentarios o clases CSS), que le dicen al compilador de HTML de AngularJS que asigne un comportamiento concreto a dicho elemento DOM (p.e. mediante escuchadores
+      de eventos), o incluso transformando el propio elemento DOM y sus hijos.</p>
+
+    <p>JavaScript</p>
+
+    <pre>
+      <code>myApp.directive("productRow", ["$rootScope", function($rootScope) { return { "restrict": "EA", "require": "^productGrid", "templateUrl": "templates/products/product_grid_row.html", "link": function($scope, tElement, tAttrs, ProductGridCtrl) { var
+        _OpenCountryDetail = function(p_country) { ProductGridCtrl.OpenWorldDetail(null, p_country); }, _Init = function() { $scope.OpenCountryDetail = _OpenCountryDetail; ProductGridCtrl.UpdateTotal($scope.data.totalRevenue, 0); }; _Init(); } }; }]);
+      </code>
+    </pre>
+
+    <p>HTML</p>
+
+    <pre>
+      <code>&lt;product-row&gt;&lt;/product-row&gt; &lt;div product-row&gt;&lt;/div&gt;
+      </code>
+    </pre>
+
+    <p>Ejemplos:</p>
+
+    <ul>
+      <li><a href="http://jsfiddle.net/JoseAntonioGil/232y12a6/">http://jsfiddle.net/JoseAntonioGil/232y12a6/</a></li>
+    </ul>
+
+    <h4>
+      <a id="user-content-directivas-de-angular" class="anchor" href="#directivas-de-angular" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Directivas de Angular</h4>
+
+    <p>A continuación, se indica un listado con las directivas mas usadas que vienen incluídas en AngularJS:</p>
+
+    <ul>
+      <li>
+        <p>
+          <strong>ng-model</strong>: permite asociar el valor de una variable al valor del elemento HTML (proporcionando two-way-binding)</p>
+
+        <pre>
+          <code> &lt;input type="text" name="login" ng-model="user.login" /&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>
+          <strong>ng-bind</strong>: asocia el valor de una expresión al contenido (innerHTML) del elemento</p>
+
+        <pre>
+          <code> &lt;div class="username" ng-bind="user.login"&gt;&lt;/div&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>
+          <strong>ng-repeat</strong>: permite recorrer todos los elementos de un array o las propiedades de un objeto</p>
+
+        <pre>
+          <code> &lt;li class="menutItem" ng-repeat="item in ['Inicio', 'Productos', 'Contacto', 'Ayuda']"&gt;&lt;/li&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>
+          <strong>ng-class</strong>: establece una clase CSS en función del valor de una expresión</p>
+
+        <pre>
+          <code> &lt;div ng-class="{'redNumbers': cuenta.saldo &lt; 0}" ng-bind="cuenta.saldo"&gt;&lt;/div&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>
+          <strong>ng-disabled</strong>: activa o desactiva un elemento según el valor de una expresión</p>
+
+        <pre>
+          <code> &lt;button ng-disabled="isValidForm" ng-bind="Enviar"&gt;&lt;/button&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>
+          <strong>ng-show/ng-hide</strong>: muestra u oculta un elemento si se cumple una condición</p>
+
+        <pre>
+          <code> &lt;div class="adminBtns" ng-show="isAdmin"&gt;&lt;/div&gt; &lt;div class="options" ng-hide="notLogged"&gt;&lt;/div&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>
+          <strong>ng-if</strong>: muestra un elemento si se cumple una condición. A diferencia de los dos ejemplos anteriores (ng-show y ng-hide), "ng-if" no renderiza el contenido cuando no se cumple la condición.</p>
+
+        <pre>
+          <code> &lt;div class="adminBtns" ng-if="isAdmin"&gt;&lt;/div&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>
+          <strong>ng-change/ng-click/...</strong> (events): permite asociar un manejador (listener) al evento en cuestión</p>
+
+        <pre>
+          <code> &lt;button ng-click="Enviar()" ng-bind="Enviar"&gt;&lt;/button&gt; &lt;button ng-mouseenter="Resaltar(true)" ng-mouseleave="Resaltar(false)" ng-bind="Enviar"&gt;&lt;/button&gt; &lt;form ng-submit="SubmitForm()"&gt;&lt;/form&gt;
+          </code>
+        </pre>
+      </li>
+    </ul>
+
+    <h4>
+      <a id="user-content-isolated-scope" class="anchor" href="#isolated-scope" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Isolated Scope</h4>
+
+    <p><a href="https://umur.io/angularjs-directives-using-isolated-scope-with-attributes/">https://umur.io/angularjs-directives-using-isolated-scope-with-attributes/</a></p>
+
+    <ul>
+      <li>Text Binding (Prefix: @)</li>
+      <li>One-way Binding (Prefix: &amp;)</li>
+      <li>Two-way Binding (Prefix: =)</li>
+    </ul>
+
+    <p>JavaScript</p>
+
+    <pre>
+      <code>myApp.directive("productRow", ["$rootScope", function($rootScope) { return { "restrict": "EA", "require": "^productGrid", "scope": { "data": "=", "stringData": "@" }, "templateUrl": "templates/products/product_grid_row.html", "link": function($scope,
+        tElement, tAttrs, ProductGridCtrl) { ... } }; }]);
+      </code>
+    </pre>
+
+    <p>HTML</p>
+
+    <pre>
+      <code>&lt;product-row data="user" stringData="{{user.nombre}}"&gt;&lt;/product-row&gt; &lt;div product-row data="status" stringData="Esto es una cadena"&gt;&lt;/div&gt;
+      </code>
+    </pre>
+
+    <p>Ejemplos:</p>
+
+    <ul>
+      <li><a href="http://jsfiddle.net/JoseAntonioGil/5p1jezcc/">http://jsfiddle.net/JoseAntonioGil/5p1jezcc/</a></li>
+    </ul>
+
+    <h3>
+      <a id="user-content-servicios" class="anchor" href="#servicios" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Servicios</h3>
+
+    <pre>
+      <code>myApp.factory("ProductTypes", ["ProductTypesService", function(ProductTypesService) { var _data, _Init = function() { ProductTypesService.get(_ProductTypesLoaded); _Init = angular.noop; }; _Init(); return { "Get": function() { return _data; } }; }]);
+      </code>
+    </pre>
+
+    <h4>
+      <a id="user-content-servicios-de-angular" class="anchor" href="#servicios-de-angular" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Servicios de Angular</h4>
+
+    <p>
+      <a href="https://docs.angularjs.org/api/ng/service/$http">
+        <strong>$http</strong>
+      </a>
+      The $http service is a core Angular service that facilitates communication with the remote HTTP servers via the browser's XMLHttpRequest object or via JSONP.</p>
+
+    <pre>
+      <code>// Cuando se cargue la página, pide del API todos los TODOs $http.get('/api/todos') .success(function(data) { $scope.todos = data; console.log(data) }) .error(function(data) { console.log('Error: ' + data); });
+      </code>
+    </pre>
+
+    <p>Ejemplos:</p>
+
+    <ul>
+      <li><a href="http://jsfiddle.net/JoseAntonioGil/ohbrmodL/">http://jsfiddle.net/JoseAntonioGil/ohbrmodL/</a></li>
+      <li><a href="http://jsfiddle.net/JoseAntonioGil/ohbrmodL/1/">http://jsfiddle.net/JoseAntonioGil/ohbrmodL/1/</a></li>
+    </ul>
+
+    <h3>
+      <a id="user-content-router" class="anchor" href="#router" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Router</h3>
+
+    <p>Una de las principales ventajas de Angular es la orientación a aplicaciones SPA (single page application), las cuales consisten en la navegación dentro de la misma página, sin necesidad de recargarla, mediante la utilización de vistas/plantillas. Para
+      ello, en Angular se utiliza el módulo
+      <em>ngRoute</em>, el cual permite configurar diferentes rutas y asociarlas a otras tantas vistas.</p>
+
+    <h3>
+      <a id="user-content-enlaces-de-utilidad" class="anchor" href="#enlaces-de-utilidad" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+      </a>Enlaces de utilidad</h3>
+
+    <ul>
+      <li>Curso de AngularJS en Code School: <a href="https://www.codeschool.com/courses/shaping-up-with-angular-js">https://www.codeschool.com/courses/shaping-up-with-angular-js</a></li>
+      <li>Tutorial oficial de AngularJS: <a href="https://docs.angularjs.org/tutorial">https://docs.angularjs.org/tutorial</a></li>
+      <li>Blog con temas de AngularJS en español: <a href="https://carlosazaustre.es/blog/tag/angularjs">https://carlosazaustre.es/blog/tag/angularjs</a></li>
+      <li>API reference de AngularJS: <a href="https://docs.angularjs.org/api">https://docs.angularjs.org/api</a></li>
+      <li>
+        <p>URL este tutorial (GitHub): <a href="https://github.com/igzJoseAntonioGil/IntroduccionAngularJS">https://github.com/igzJoseAntonioGil/IntroduccionAngularJS</a></p>
+      </li>
+    </ul>
+  </article>
+</div>

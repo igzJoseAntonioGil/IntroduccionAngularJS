@@ -1,0 +1,10 @@
+<div>
+  <h2>Ofertas</h2>
+
+  <div>listado de ofertas</div>
+  <ul>
+    <li ng-repeat="(key, oferta) in ofertas">
+      <a href="#/ofertas/{{key}}" ng-bind="oferta.title"></a>
+    </li>
+  </ul>
+</div>
