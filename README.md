@@ -146,7 +146,7 @@ myApp.controller("MainCtrl", ["$scope", "$rootScope", function($scope, $rootScop
 }]);
 ```
 
-[Más info](https://docs.angularjs.org/guide/scope)
+Más info: https://docs.angularjs.org/guide/scope
 
 Ejemplos:
 - http://jsfiddle.net/JoseAntonioGil/nhwvk9wb/
