@@ -1,5 +1,5 @@
 
-myApp.controller('OfertaCtrl', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
+myApp.controller('OfertaCtrl', ['$scope', '$routeParams', 'NavigationService', function ($scope, $routeParams, NavigationService) {
 
   var ofertas = {
     oferta1: {
@@ -29,6 +29,8 @@ myApp.controller('OfertaCtrl', ['$scope', '$rootScope', '$routeParams', function
     if ($routeParams.oferta) {
       $scope.oferta = ofertas[$routeParams.oferta];
     }
+
+    NavigationService.select('Ofertas');
   };
 
   Init();

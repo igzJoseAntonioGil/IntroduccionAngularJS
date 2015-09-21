@@ -1,3 +1,4 @@
 
-myApp.controller('AboutCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+myApp.controller('AboutCtrl', ['$scope', 'NavigationService', function ($scope, NavigationService) {
+  NavigationService.select('About');
 }]);

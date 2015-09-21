@@ -15,7 +15,7 @@
 
 					<nav class="pure-menu pure-menu-horizontal">
 						<ul class="pure-menu-list">
-							<li class="pure-menu-item" ng-repeat="item in menuItems" ng-class="{'pure-menu-selected': item.title === selectedItem}">
+							<li class="pure-menu-item" ng-repeat="item in menuItems" ng-class="{'pure-menu-selected': item.title === getSelected()}">
 								<a href="#{{item.url}}"
 									ng-bind="item.title"
 									ng-click="selectMenuItem(item.title)"

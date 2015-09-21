@@ -1,12 +1,14 @@
 <span class="ficha-modelo">
 	<div ng-bind="modelo.name"></div>
 	<ul>
-		<li ng-repeat="version in modelo.versions | orderBy : 'base_price'">
-			<p ng-bind="version.title + ' desde: ' + (version.base_price | currency : '€' : 0)"></p>
+		<li ng-repeat="version in modelo.versions | orderBy : 'base_price'" style="display: inline-block; border: 1px #999 solid; padding: 10px; margin: 5px;">
+			<p ng-bind="version.title"></p>
+			<hr/>
+			<p ng-bind="'Precio desde: ' + (version.base_price | currency : '€' : 0)"></p>
 			<p>Acabados:
-				<span ng-repeat="acabado in version.editions">
-					{{acabado + ($last ? "" : ", ")}}
-				</span>
+				<ul>
+					<li ng-repeat="acabado in version.editions" ng-bind="acabado"></li>
+				</ul>
 			</p>
 		</li>
 	</ul>

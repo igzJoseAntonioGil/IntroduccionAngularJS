@@ -1,12 +1,12 @@
 
-myApp.controller('ModelosCtrl', ['$scope', '$rootScope', '$routeParams', 'ModelosService', function ($scope, $rootScope, $routeParams, ModelosService) {
+myApp.controller('ModelosCtrl', ['$scope', '$routeParams', 'NavigationService', 'ModelosService', function ($scope, $routeParams, NavigationService, ModelosService) {
 
   var Init = function() {
 
     ModelosService
       .get()
       .success(function (data) {
-        $scope.modelos = data; 
+        $scope.modelos = data;
 
         if ($routeParams.modelo) {
           for (var i = 0; i < data.length; i++) {
@@ -15,10 +15,12 @@ myApp.controller('ModelosCtrl', ['$scope', '$rootScope', '$routeParams', 'Modelo
               break;
             }
           }
-        }                 
+        }
       });
 
     $scope.modelo = {};
+
+    NavigationService.select('Modelos');
   };
 
   Init();

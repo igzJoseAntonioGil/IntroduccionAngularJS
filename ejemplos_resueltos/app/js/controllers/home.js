@@ -1,5 +1,5 @@
 
-myApp.controller('HomeCtrl', ['$scope', '$rootScope', "RelojService", function ($scope, $rootScope, RelojService) {
+myApp.controller('HomeCtrl', ['$scope', '$rootScope', 'NavigationService', 'RelojService', function ($scope, $rootScope, NavigationService, RelojService) {
 
   var loadRelojes = function () {
     RelojService
@@ -19,7 +19,7 @@ myApp.controller('HomeCtrl', ['$scope', '$rootScope', "RelojService", function (
     RelojService
       .post($scope.clock)
       .success(function (data) {
-        
+
         $scope.clock = {};
         loadRelojes();
       });
@@ -40,4 +40,6 @@ myApp.controller('HomeCtrl', ['$scope', '$rootScope', "RelojService", function (
   };
 
   loadRelojes();
+
+  NavigationService.select('Home');
 }]);
