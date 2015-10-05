@@ -351,6 +351,7 @@ angular
 
 - Curso de AngularJS en Code School: https://www.codeschool.com/courses/shaping-up-with-angular-js
 - Tutorial oficial de AngularJS: https://docs.angularjs.org/tutorial
+- Guía de estilo de AngularJS (by John Papa): https://github.com/johnpapa/angular-styleguide
 - Blog con temas de AngularJS en español: https://carlosazaustre.es/blog/tag/angularjs
 - Developer guide de AngularJS: https://docs.angularjs.org/guide
 - API reference de AngularJS: https://docs.angularjs.org/api
